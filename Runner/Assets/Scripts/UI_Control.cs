@@ -7,7 +7,7 @@ public class UI_Control : MonoBehaviour, IDragHandler, IPointerDownHandler
 {
     public bool gameStart = false;
     public Transform player;
-    public float smoothx = 0.03f;
+    public float smoothx = 0.02f;
     public void OnDrag(PointerEventData eventData)
     {
         Vector3 temPosition = player.position;

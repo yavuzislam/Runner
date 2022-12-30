@@ -24,7 +24,7 @@ public class PlayerControl : MonoBehaviour
         {
             gameManager.AnimStart();
             transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
-        }       
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -45,7 +45,7 @@ public class PlayerControl : MonoBehaviour
             else if (Collectables.Count >= 12 && Collectables.Count < 18)
             {
                 Collectables.Add(other.gameObject);
-                other.transform.position = transform.position + new Vector3(-0.6f, 0.150f, -0.5f) + new Vector3(0f, 0.3f, 0f) * (Collectables.Count - 8);
+                other.transform.position = transform.position + new Vector3(-0.6f, 0.150f, -0.5f) + new Vector3(0f, 0.3f, 0f) * (Collectables.Count - 12);
                 top = Collectables.Count;
             }
             other.transform.SetParent(transform);
@@ -78,6 +78,7 @@ public class PlayerControl : MonoBehaviour
             {
                 gameManager.Lose();
             }
+            Collectables.Clear();
         }
         else if (other.tag == "Up")
         {
@@ -87,6 +88,8 @@ public class PlayerControl : MonoBehaviour
         {
             if (transform.childCount != 2)
             {
+                gameManager.anim.enabled = false;
+                control.gameStart = false;
                 gameManager.Win();
             }
             else
