@@ -6,6 +6,7 @@ using static UnityEditor.Progress;
 
 public class PlayerControl : MonoBehaviour
 {
+    public UI_Control control;
     public GameManager gameManager;
     Rigidbody rb;
     public List<GameObject> Collectables;
@@ -19,35 +20,29 @@ public class PlayerControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        gameManager.AnimStart();
-        transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
-        horizontal = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * 8f * horizontal * Time.fixedDeltaTime);
-        Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, -4.5f, 4.5f);
-        transform.position = pos;
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //        rb.AddForce(Vector3.up * 5f,ForceMode.Impulse);  
-        //}
+        if (control.gameStart)
+        {
+            gameManager.AnimStart();
+            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
+        }       
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Collectable")
         {
-            if (Collectables.Count < 4)
+            if (Collectables.Count < 6)
             {
                 Collectables.Add(other.gameObject);
                 other.transform.position = transform.position + new Vector3(0f, 0.150f, -0.5f) + new Vector3(0f, 0.3f, 0f) * Collectables.Count;
                 top = Collectables.Count;
             }
-            else if (Collectables.Count < 8)
+            else if (Collectables.Count < 12)
             {
                 Collectables.Add(other.gameObject);
                 other.transform.position = transform.position + new Vector3(-0.3f, 0.150f, -0.5f) + new Vector3(0f, 0.3f, 0f) * (Collectables.Count - top);
 
             }
-            else if (Collectables.Count >= 8 && Collectables.Count < 12)
+            else if (Collectables.Count >= 12 && Collectables.Count < 18)
             {
                 Collectables.Add(other.gameObject);
                 other.transform.position = transform.position + new Vector3(-0.6f, 0.150f, -0.5f) + new Vector3(0f, 0.3f, 0f) * (Collectables.Count - 8);
